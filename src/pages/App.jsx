@@ -1,10 +1,10 @@
-import RoutePaths from "../routes";
+import RoutePaths from '../routes';
 
 function App() {
   return (
     <>
-      <div>
-      <RoutePaths/>
+      <div className="bg-primary">
+        <RoutePaths />
       </div>
     </>
   );
