@@ -1,11 +1,13 @@
-
+import Nav from './nav';
+import Logo from '../logo';
 
 function Header() {
-    return (
-        <div className="">
-       <h1>Header placeholder</h1>
-      </div>
-    );
-  }
-  export default Header;
-
+  return (
+    <div className="mb-12">
+      <Nav />
+      <Logo />
+      <hr className="mt-12 border-overlayLighter"></hr>
+    </div>
+  );
+}
+export default Header;
