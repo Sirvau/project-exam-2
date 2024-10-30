@@ -1,5 +1,3 @@
-
-
 function AdminPage() {
   return (
     <div>
