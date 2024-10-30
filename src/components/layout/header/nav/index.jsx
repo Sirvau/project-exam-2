@@ -7,9 +7,9 @@ function Nav() {
       <div className="flex-1"></div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
-          <li className="me-6">Register / Sign In</li>
+          <li className="me-6 mt-4">Register / Sign In</li>
           <NavLink to="/">
-            <li className="me-6">Explore Venues</li>
+            <li className="me-6 mt-4">Explore Venues</li>
           </NavLink>
           <li>
             <details>
