@@ -10,18 +10,24 @@ const schema = yup
   .object({
     fullName: yup
       .string()
-      .min(3, 'Your full name should be at least 3 characters.')
-      .max(50, 'Your full name cannot be longer than 50 characters.')
+      .min(3, 'Please enter a name with at least 3 characters.')
+      .max(35, 'Please enter a name with less than 35 characters.')
       .required('Please enter your full name'),
     email: yup
       .string()
-      .matches(/^[a-zA-Z0-9_.±]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, 'Invalid email format.')
+      .matches(
+        /^[\w\-.]+@(stud\.noroff\.no|noroff\.no)$/,
+        'Please register with a stud.noroff.no or noroff.no email.'
+      )
       .required('Please enter your email address.'),
     password: yup
       .string()
-      .min(8, 'Your password should be at least 8 characters.')
-      .max(16, 'Your password cannot be longer than 16 characters.')
-      .required('Please enter your password')
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]*$/,
+        'Please register a password containing a special character and upper- and lowercase letters.'
+      )
+      .min(8, 'Please enter a password with at least 8 characters.')
+      .max(16, 'Please enter a password not longer than 16 characters.')
   })
   .required();
 
@@ -47,8 +53,7 @@ export function RegisterForm() {
         id="register-form"
         method="POST"
         action=""
-        className="mt-6 flex flex-col mx-auto"
-      >
+        className="mt-6 flex flex-col mx-auto">
         <div className="mb-1">
           <label className="label hidden">Full Name</label>
           <CustomInput
