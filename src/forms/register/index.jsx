@@ -4,11 +4,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import SubmitButton from '../../components/buttons/submit-button';
 import CustomInput from '../../components/inputs';
 import { emailIcon, nameIcon, passwordIcon } from '../../components/icons';
+import useApi from '../../hooks/api/index';
+import { REGISTER_URL } from '../../constants';
 
 // Validation schema
 const schema = yup
   .object({
-    fullName: yup
+    name: yup
       .string()
       .min(3, 'Please enter a name with at least 3 characters.')
       .max(35, 'Please enter a name with less than 35 characters.')
@@ -41,9 +43,15 @@ export function RegisterForm() {
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = (data) => {
-    /*Do the post request here*/
-    console.log('Submitted from register form:', data);
+  const { POST, error, loading } = useApi(`${REGISTER_URL}`);
+
+  const onSubmit = async (data) => {
+    try {
+      await POST(data);
+      console.log('Submitted from register form:', data);
+    } catch (err) {
+      console.error('Error submitting form:', err);
+    }
   };
 
   return (
@@ -57,8 +65,8 @@ export function RegisterForm() {
         <div className="mb-1">
           <label className="label hidden">Full Name</label>
           <CustomInput
-            id="fullName"
-            name="fullName"
+            id="name"
+            name="name"
             icon={nameIcon}
             type="text"
             placeholder="Enter your full name"
@@ -98,9 +106,13 @@ export function RegisterForm() {
             {errors.password?.message}
           </p>
         </div>
+
         <div className="flex justify-center">
           <SubmitButton buttonText="Register" />
         </div>
+
+        {loading && <p className="text-xs text-secondary">Submitting...</p>}
+        {error && <p className="text-xs text-orange-500">Error: {error}</p>}
       </form>
     </div>
   );

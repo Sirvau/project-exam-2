@@ -4,6 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import SubmitButton from '../../components/buttons/submit-button';
 import CustomInput from '../../components/inputs';
 import { emailIcon, passwordIcon } from '../../components/icons';
+import useApi from '../../hooks/api/index';
+import { LOGIN_URL } from '../../constants';
 
 // Validation schema
 const schema = yup
@@ -23,8 +25,15 @@ export function SignInForm() {
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = (data) => {
-    console.log('Submitted from sign in form:', data);
+  const { POST, error, loading } = useApi(`${LOGIN_URL}`);
+
+  const onSubmit = async (data) => {
+    try {
+      await POST(data, true, 'User profile:');
+      console.log('Submitted from sign in form:', data);
+    } catch (err) {
+      console.error('Error submitting form:', err);
+    }
   };
 
   return (
@@ -34,8 +43,7 @@ export function SignInForm() {
         id="sign-in-form"
         method="POST"
         action=""
-        className="mt-12 flex flex-col mx-auto"
-      >
+        className="mt-12 flex flex-col mx-auto">
         <div className="mb-1">
           <label className="label hidden">Email</label>
           <CustomInput
@@ -67,6 +75,8 @@ export function SignInForm() {
         <div className="flex justify-center">
           <SubmitButton buttonText="Sign in" />
         </div>
+        {loading && <p className="text-xs text-secondary">Submitting...</p>}
+        {error && <p className="text-xs text-orange-500">Error: {error}</p>}
       </form>
     </div>
   );
