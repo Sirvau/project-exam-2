@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { API_KEY } from '../../constants';
-import { saveToStorage } from '../../stores/local-storage';
+import { useUserStore } from '../../stores/user-store';
 
 export const useApi = (url) => {
+  const { userData, setUserData } = useUserStore();
+  const accessToken = userData?.data?.accessToken;
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const request = async (method, body = null, save = false, storageKey = null) => {
+  const request = async (method, body = null, save = false) => {
     setLoading(true);
     setError(null);
 
@@ -16,7 +18,8 @@ export const useApi = (url) => {
         method,
         headers: {
           'Content-Type': 'application/json',
-          'X-Noroff-API-Key': `${API_KEY}`
+          'X-Noroff-API-Key': `${API_KEY}`,
+          ...(accessToken && { Authorization: `Bearer ${accessToken}` })
         },
         body: body ? JSON.stringify(body) : null
       };
@@ -31,7 +34,7 @@ export const useApi = (url) => {
       setData(result);
 
       if (save) {
-        saveToStorage(storageKey, result);
+        setUserData(result);
       }
     } catch (err) {
       setError(err.message);
@@ -40,11 +43,11 @@ export const useApi = (url) => {
     }
   };
 
-  const GET = (body, save = false, storageKey) => request('GET', body, save, storageKey);
-  const POST = (body, save = false, storageKey) => request('POST', body, save, storageKey);
-  const PUT = (body, save = false, storageKey) => request('PUT', body, save, storageKey);
-  const PATCH = (body, save = false, storageKey) => request('PATCH', body, save, storageKey);
-  const REMOVE = (save = false, storageKey) => request('DELETE', null, save, storageKey);
+  const GET = (body) => request('GET', body);
+  const POST = (body, save = false) => request('POST', body, save);
+  const PUT = (body, save = false) => request('PUT', body, save);
+  const PATCH = (body, save = false) => request('PATCH', body, save);
+  const REMOVE = (save = false) => request('DELETE', null, save);
 
   return { data, error, loading, GET, POST, PUT, PATCH, REMOVE };
 };
