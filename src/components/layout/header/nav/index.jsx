@@ -1,7 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import Avatar from '../../../profile/avatar';
+import { useUserStore } from '../../../../stores/user-store';
 
 function Nav() {
+  const { removeUserData } = useUserStore();
   return (
     <div className="navbar">
       <div className="flex-1"></div>
@@ -9,8 +11,7 @@ function Nav() {
         <ul className="menu menu-horizontal w-full justify-end space-x-4 px-1">
           <li
             className="hover:cursor-pointer hover:scale-105 duration-300 mt-4"
-            onClick={() => document.getElementById('sign-in-modal').showModal()}
-          >
+            onClick={() => document.getElementById('sign-in-modal').showModal()}>
             Register / Sign In
           </li>
           <NavLink to="/">
@@ -32,7 +33,12 @@ function Nav() {
                     Admin venues
                   </li>
                 </NavLink>
-                <li className="my-1 py-3 px-4 hover:scale-105 duration-300 hover:bg-overlayLight">
+                <li
+                  onClick={() => {
+                    removeUserData();
+                    window.location.href = '/';
+                  }}
+                  className="my-1 py-3 px-4 hover:scale-105 duration-300 hover:bg-overlayLight cursor-pointer">
                   Sign out
                 </li>
               </ul>
