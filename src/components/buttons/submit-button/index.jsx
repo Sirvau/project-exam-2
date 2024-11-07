@@ -5,7 +5,7 @@ export function SubmitButton({ buttonText }) {
     <div>
       <button
         type="submit"
-        className="btn btn-md bg-tBase border-0 rounded-full w-32 my-6 tracking-wider"
+        className="btn btn-md bg-tBase border-0 rounded-full w-36 my-6 tracking-wider text-sm"
       >
         {' '}
         {buttonText}

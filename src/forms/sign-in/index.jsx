@@ -29,7 +29,7 @@ export function SignInForm() {
 
   const onSubmit = async (data) => {
     try {
-      await POST(data, true, 'User profile:');
+      await POST(data, true);
       console.log('Submitted from sign in form:', data);
     } catch (err) {
       console.error('Error submitting form:', err);
