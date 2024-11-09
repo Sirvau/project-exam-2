@@ -1,6 +1,6 @@
 import UserProfile from '../../components/profile/profile-section';
 import EditProfileModal from '../../modals/profile/edit-profile';
-import TableTemplate from '../../components/table';
+import BookingList from '../../components/profile/booking-list';
 
 function ProfilePage() {
   return (
@@ -14,10 +14,7 @@ function ProfilePage() {
           <h1 className="font-header text-3xl sm:text-4xl mt-6 sm:mt-0">My future holidaze</h1>
           <p className="my-2">booked by</p>
           <p className="italic text-sm mb-12 sm:mb-16">Profile name</p>
-          <TableTemplate />
-          <TableTemplate />
-          <TableTemplate />
-          <TableTemplate />
+          <BookingList />
         </div>
       </section>
     </div>
