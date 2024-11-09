@@ -6,8 +6,7 @@ export function SubtileButton({ buttonText, onClick, icon }) {
       <button
         onClick={onClick}
         type=""
-        className="btn btn-md bg-primary border-1 border-overlayLighter hover:border-overlayLight hover:bg-overlayLight rounded-full w-36 my-6 text-tBase text-sm tracking-wider"
-      >
+        className="btn btn-md bg-primary border-1 border-overlayLighter hover:border-overlayLight hover:bg-overlayLight rounded-full w-40 my-6 text-tBase text-sm tracking-wider">
         {' '}
         {buttonText}
         {icon}
