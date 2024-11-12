@@ -62,22 +62,6 @@ export const editProfileIcon = (
   </svg>
 );
 
-export const personIcon = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={1.5}
-    stroke="currentColor"
-    className=" size-4 stroke-2 inline-block">
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-    />
-  </svg>
-);
-
 export const deleteIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -117,3 +101,8 @@ export const cheveonDownIcon = (
     <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
   </svg>
 );
+
+export const starIcon = <i className="fa-solid fa-star text-secondary scale-90"></i>;
+export const personIcon = <i className="fa-solid fa-user-group scale-75"></i>;
+export const pinIcon = <i className="fa-solid fa-location-dot scale-90"></i>;
+export const searchIcon = <i className="fa-solid fa-magnifying-glass"></i>;
