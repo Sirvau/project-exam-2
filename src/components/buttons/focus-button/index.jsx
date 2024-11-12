@@ -10,13 +10,16 @@ export function FocusButton({ buttonText, onClick, icon }) {
         {' '}
         {buttonText}
         {icon}
+        <span className="hidden size-4 loading loading-spinner"></span>
       </button>
     </div>
   );
 }
 
 FocusButton.propTypes = {
-  buttonText: PropTypes.string.isRequired
+  buttonText: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  icon: PropTypes.element
 };
 
 export default FocusButton;
