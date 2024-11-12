@@ -29,7 +29,7 @@ export function Modal({
             <div className="mb-4">{deviderLine}</div>
             <div className="text-center">
               <p className="">{bodyText}</p>
-              <div className="pb-4">{button}</div>
+              <div className="pb-4 mt-4">{button}</div>
             </div>
           </div>
         </div>
