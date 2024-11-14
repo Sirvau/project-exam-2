@@ -22,7 +22,11 @@ function HeroSection() {
           </h1>
           <h3></h3>
         </div>
-        <SubtileButton buttonText="Search" icon={searchIcon} />
+        <SubtileButton
+          buttonText="Search"
+          icon={searchIcon}
+          className="hover:bg-tBase hover:text-primary hover:scale-105 hover:duration-500"
+        />
       </form>
     </section>
   );
