@@ -8,7 +8,7 @@ export function TableRowTemplate({
   title = 'Title',
   description = 'Description',
   status = 'Status',
-  date = new Date(),
+  date = 'new Date()',
   persons = 0,
   amount = 0,
   onEdit = null,
@@ -57,9 +57,9 @@ TableRowTemplate.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   status: PropTypes.string,
-  date: PropTypes.instanceOf(Date),
+  date: PropTypes.string,
   persons: PropTypes.number,
-  amount: PropTypes.number, // `amount` is validated as a number
+  amount: PropTypes.number,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func
 };

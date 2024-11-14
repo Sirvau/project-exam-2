@@ -106,3 +106,9 @@ export const starIcon = <i className="fa-solid fa-star text-secondary scale-90">
 export const personIcon = <i className="fa-solid fa-user-group scale-75"></i>;
 export const pinIcon = <i className="fa-solid fa-location-dot scale-90"></i>;
 export const searchIcon = <i className="fa-solid fa-magnifying-glass"></i>;
+export const parking = <i className="fa-solid fa-car"></i>;
+export const wifi = <i className="fa-solid fa-wifi"></i>;
+export const breakfast = <i className="fa-solid fa-mug-saucer"></i>;
+export const pets = <i className="fa-solid fa-dog"></i>;
+export const checkTrue = <i className="fa-solid fa-check scale-75"></i>;
+export const xFalse = <i className="fa-solid fa-x scale-75"></i>;
