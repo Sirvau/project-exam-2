@@ -4,7 +4,7 @@ import Footer from './footer';
 
 function Layout() {
   return (
-    <div className="text-tBase mx-4 md:mx-20 max lg:mx-24 xl:mx-80 2xl:mx-96">
+    <div className="text-tBase mx-4 md:mx-20 max lg:mx-24 2xl:mx-72">
       <Header />
       <Outlet />
       <Footer />
