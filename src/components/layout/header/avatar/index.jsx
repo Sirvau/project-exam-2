@@ -1,4 +1,4 @@
-import { useUserStore } from '../../../stores/user-store';
+import { useUserStore } from '../../../../stores/user-store';
 
 export function Avatar() {
   const { userData } = useUserStore();

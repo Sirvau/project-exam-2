@@ -34,7 +34,7 @@ function UserProfile() {
         bio={bio}
         venueManager={venueManager}
       />
-      <div className="flex justify-center">
+      <div className="flex justify-center pb-6 mb-1">
         <SubtileButton
           buttonText="Edit Profile"
           icon={editProfileIcon}

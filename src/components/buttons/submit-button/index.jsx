@@ -5,10 +5,9 @@ export function SubmitButton({ buttonText }) {
     <div>
       <button
         type="submit"
-        className="btn btn-md bg-tBase border-0 rounded-full w-36 my-6 tracking-wider text-sm"
-      >
-        {' '}
+        className="btn btn-md bg-tBase border-0 rounded-full w-40 my-6 tracking-wider text-sm">
         {buttonText}
+        <span className="hidden size-4 loading loading-spinner"></span>
       </button>
     </div>
   );

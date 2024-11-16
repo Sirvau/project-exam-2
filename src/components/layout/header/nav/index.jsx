@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import Avatar from '../../../profile/avatar';
+import Avatar from '../avatar';
 import { useUserStore } from '../../../../stores/user-store';
 
 function Nav() {

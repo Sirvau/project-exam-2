@@ -5,7 +5,7 @@ import SoMeIcons from './social-media';
 
 function Footer() {
   return (
-    <footer className="sticky footer footer-center">
+    <footer className="sticky footer footer-center mt-8">
       <hr className="mt-12 border-overlayLighter w-full"></hr>
       <aside>
         <Logo />
