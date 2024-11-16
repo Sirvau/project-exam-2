@@ -1,7 +1,9 @@
+import SpecificVenue from '../../components/venues/specific-venue';
+
 function SpecificVenuePage() {
   return (
     <div>
-      <h1>Placeholder for specific venue</h1>
+      <SpecificVenue />
     </div>
   );
 }

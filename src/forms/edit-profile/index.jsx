@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect } from 'react';
 import SubmitButton from '../../components/buttons/submit-button';
 import CustomInput from '../../components/inputs';
 import useApi from '../../hooks/api/index';
@@ -24,7 +25,7 @@ const schema = yup.object({
   bio: yup.string().max(160, 'Please use less than 160 characters in your bio')
 });
 
-// Edit profile form with prefilled user information
+// Edit Profile Form
 export function EditProfileForm() {
   const { userData } = useUserStore();
   const userName = userData?.data?.name;
@@ -32,46 +33,47 @@ export function EditProfileForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      banner: userData?.data?.banner?.url || '',
-      avatar: userData?.data?.avatar?.url || '',
-      bio: userData?.data?.bio || ''
+      banner: '',
+      avatar: '',
+      bio: ''
     }
   });
 
   const { PUT, error, loading } = useApi(userName ? `${EDIT_PROFILE_URL}/${userName}` : null);
 
+  useEffect(() => {
+    if (userData?.data) {
+      reset({
+        banner: userData.data.banner?.url || '',
+        avatar: userData.data.avatar?.url || '',
+        bio: userData.data.bio || ''
+      });
+    }
+  }, [userData, reset]);
+
   const onSubmit = async (data) => {
     const { banner, avatar, bio } = data;
 
     const requestBody = {
-      banner: {
-        url: banner,
-        alt: ''
-      },
-      avatar: {
-        url: avatar,
-        alt: ''
-      },
-      bio: bio
+      banner: { url: banner, alt: '' },
+      avatar: { url: avatar, alt: '' },
+      bio
     };
-
-    console.log('Request body:', requestBody);
 
     try {
       await PUT(requestBody);
-
-      console.log('Submitted from edit profile form:', requestBody);
 
       useUserStore.getState().setUserData({
         data: {
           ...userData.data,
           avatar: { url: avatar, alt: '' },
           banner: { url: banner, alt: '' },
-          bio: bio
+          bio
         }
       });
     } catch (err) {
@@ -86,8 +88,7 @@ export function EditProfileForm() {
         id="edit-profile-form"
         method="PUT"
         action=""
-        className="mt-6 flex flex-col mx-auto"
-      >
+        className="mt-6 flex flex-col mx-auto">
         <div className="relative">
           <label className="label text-xs font-semibold tracking-wider absolute ms-6">Banner</label>
           <CustomInput
