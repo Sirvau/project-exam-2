@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { locationPlaceholderImg } from '../../../images';
 import { starIcon, personIcon, pinIcon } from '../../icons';
 
-function VenueCardLarge() {
+function LargeVenueCard() {
   return (
     <Link to="">
       <div className="shadow-md hover:bg-primary hover:border hover:border-modal hover:scale-95 hover:duration-500 bg-modal p-12 lg:full lg:me-6">
@@ -37,4 +37,4 @@ function VenueCardLarge() {
   );
 }
 
-export default VenueCardLarge;
+export default LargeVenueCard;
