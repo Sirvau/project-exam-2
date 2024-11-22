@@ -1,9 +1,43 @@
-import useUserStore from '../../../stores/user-store';
+import { useEffect, useState } from 'react';
+import ApiManager from '../../../api-manager/api-manager';
+import { loadFromStorage } from '../../../stores/local-storage';
 
-export function UserDetails() {
-  const { userData } = useUserStore();
+const UserDetails = () => {
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (!userData) return <p>No user data available.</p>;
+  useEffect(() => {
+    const userName = loadFromStorage('userProfile')?.name;
+
+    if (!userName) {
+      setError('No user found in local storage.');
+      setLoading(false);
+      return;
+    }
+
+    ApiManager.singleProfile(userName)
+      .then((data) => {
+        if (data?.data) {
+          setUserData(data.data);
+        } else {
+          throw new Error('Invalid response data');
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(`Failed to fetch user profile: ${err.message}`);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <p>Loading user profile...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
 
   const {
     name = 'No name available',
@@ -11,7 +45,7 @@ export function UserDetails() {
     banner = {},
     bio = 'No bio available',
     venueManager = false
-  } = userData?.data || {};
+  } = userData || {};
 
   return (
     <div className="text-center relative">
@@ -20,7 +54,7 @@ export function UserDetails() {
         <img
           src={banner.url || 'default-banner-url'}
           alt={banner.alt || 'No banner description'}
-          className="w-full h-full object-cover rounded-t-md "
+          className="w-full h-full object-cover rounded-t-md"
         />
       </div>
 
@@ -39,6 +73,6 @@ export function UserDetails() {
       <p className="font-base text-sm mt-4 mb-6 text-left mx-8 sm:mx-4 tracking-wide">{bio}</p>
     </div>
   );
-}
+};
 
 export default UserDetails;
