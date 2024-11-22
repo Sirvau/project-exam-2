@@ -4,8 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import SubmitButton from '../../components/buttons/submit-button';
 import CustomInput from '../../components/inputs';
 import { emailIcon, passwordIcon } from '../../components/icons';
-import useApi from '../../hooks/api/index';
-import { LOGIN_URL } from '../../constants';
+import ApiManager from '../../api-manager/api-manager.js';
+import useUserStore from '../../stores/user-store';
 
 // Validation schema
 const schema = yup
@@ -15,7 +15,6 @@ const schema = yup
   })
   .required();
 
-// Sign In Form
 export function SignInForm() {
   const {
     register,
@@ -25,14 +24,18 @@ export function SignInForm() {
     resolver: yupResolver(schema)
   });
 
-  const { POST, error, loading } = useApi(`${LOGIN_URL}`);
+  const { setUserProfile, setAccessToken } = useUserStore();
 
   const onSubmit = async (data) => {
     try {
-      await POST(data, true);
-      console.log('Submitted from sign in form:', data);
+      const { accessToken, userProfile } = await ApiManager.login(data, { _holidaze: true });
+
+      setUserProfile(userProfile);
+      setAccessToken(accessToken);
+
+      console.log('User logged in:', userProfile);
     } catch (err) {
-      console.error('Error submitting form:', err);
+      console.error('Login failed:', err);
     }
   };
 
@@ -75,8 +78,6 @@ export function SignInForm() {
         <div className="flex justify-center">
           <SubmitButton buttonText="Sign in" />
         </div>
-        {loading && <p className="text-xs text-secondary">Submitting...</p>}
-        {error && <p className="text-xs text-orange-500">Error: {error}</p>}
       </form>
     </div>
   );
