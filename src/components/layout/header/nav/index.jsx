@@ -1,9 +1,18 @@
 import { NavLink } from 'react-router-dom';
 import Avatar from '../avatar';
 import { useUserStore } from '../../../../stores/user-store';
+import { useNavigate } from 'react-router-dom';
 
 function Nav() {
-  const { removeUserData } = useUserStore();
+  const clearUser = useUserStore((state) => state.clearUser);
+
+  const logout = () => {
+    clearUser();
+    console.log('User logged out');
+  };
+
+  const navigate = useNavigate();
+
   return (
     <div className="navbar">
       <div className="flex-1"></div>
@@ -18,7 +27,7 @@ function Nav() {
             <li className="hover:scale-105 duration-300 mt-4">Explore Venues</li>
           </NavLink>
           <li className="relative">
-            <details className="group">
+            <details id="avatar-with-menu" className="group">
               <summary className="hover:scale-105 duration-300 cursor-pointer">
                 <Avatar />
               </summary>
@@ -35,8 +44,9 @@ function Nav() {
                 </NavLink>
                 <li
                   onClick={() => {
-                    removeUserData();
-                    window.location.href = '/';
+                    logout();
+                    console.log('User is logged out');
+                    navigate('/');
                   }}
                   className="my-1 py-3 px-4 hover:scale-105 duration-300 hover:bg-overlayLight cursor-pointer">
                   Sign out
