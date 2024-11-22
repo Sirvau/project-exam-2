@@ -1,18 +1,25 @@
-import * as zustand from 'zustand';
+import { create } from 'zustand';
+import { loadFromStorage, saveToStorage, removeFromStorage } from '../local-storage';
 
-export const useUserStore = zustand.create((set) => ({
-  userData: null,
-  setUserData: (data) => {
-    localStorage.setItem('User profile:', JSON.stringify(data));
-    set({ userData: data });
+export const useUserStore = create((set) => ({
+  userProfile: loadFromStorage('userProfile') || null,
+  accessToken: loadFromStorage('accessToken') || null,
+
+  isAuthenticated: Boolean(loadFromStorage('accessToken')),
+
+  setUserProfile: (profile) => {
+    saveToStorage('userProfile', profile);
+    set({ userProfile: profile, isAuthenticated: true });
   },
-  removeUserData: () => {
-    localStorage.removeItem('User profile:');
-    set({ userData: null });
+
+  setAccessToken: (token) => {
+    saveToStorage('accessToken', token);
+    set({ accessToken: token, isAuthenticated: true });
   },
-  loadUserData: () => {
-    const data = JSON.parse(localStorage.getItem('User profile:'));
-    if (data) set({ userData: data });
+  clearUser: () => {
+    removeFromStorage('userProfile');
+    removeFromStorage('accessToken');
+    set({ userProfile: null, accessToken: null, isAuthenticated: false });
   }
 }));
 
