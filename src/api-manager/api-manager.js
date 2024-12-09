@@ -2,85 +2,109 @@ import { BASE_URL } from '../constants';
 import ENDPOINTS from '../constants';
 import ApiMethods from './api-methods';
 
-
-/**
- * API Manager class to handle communication with the backend for various endpoints.
- */
 class ApiManager {
+  //Auth
+  static register = (data) => {
+    const url = BASE_URL + ENDPOINTS.REGISTER();
+    return ApiMethods.post(url, data);
+  };
 
- 
-  static getAllVenues = (params = {}) => {
-    const url = new URL(BASE_URL + ENDPOINTS.ALL_VENUES());
-
-    // Appending query parameters to the URL
+  static login = async (data, params = {}) => {
+    const url = new URL(BASE_URL + ENDPOINTS.LOGIN());
     Object.keys(params).forEach((key) => {
       url.searchParams.append(key, params[key]);
     });
+    return ApiMethods.post(url.toString(), data)
+      .then((response) => {
+        const { accessToken, name, email, bio, avatar, banner, venueManager } = response.data;
+        if (!accessToken || !name) {
+          throw new Error('Invalid login response');
+        }
+        return { accessToken, userProfile: { name, email, bio, avatar, banner, venueManager } };
+      })
+      .catch((err) => {
+        console.error('Error during login:', err);
+        throw err;
+      });
+  };
 
+  //Venues
+  static getAllVenues = (params = {}) => {
+    const url = new URL(BASE_URL + ENDPOINTS.ALL_VENUES());
+    Object.keys(params).forEach((key) => {
+      url.searchParams.append(key, params[key]);
+    });
     return ApiMethods.get(url.toString());
   };
 
-   /**
-   * Registers a new user.
-   */
-   static register = (data) => {
-    const url = BASE_URL + ENDPOINTS.REGISTER(); 
-
-    return ApiMethods.post(url, data); 
+  static VenuesByProfile = (name) => {
+    const url = new URL(BASE_URL + ENDPOINTS.VENUES_BY_PROFILE(name));
+    url.searchParams.append('_bookings', 'true'); 
+    console.log('Requesting URL:', url.toString());
+    return ApiMethods.get(url.toString());
   };
+  
 
-
- /**
-   * Login user.
-   */
- static login = async (data, params = {}) => {
-  const url = new URL(BASE_URL + ENDPOINTS.LOGIN());
-
-  // Appending query parameters to the URL
-  Object.keys(params).forEach((key) => {
-    url.searchParams.append(key, params[key]);
-  });
-
-  return ApiMethods.post(url.toString(), data)
+static createVenue = async (data) => {
+  const url = BASE_URL + ENDPOINTS.CREATE_VENUE();
+  return ApiMethods.post(url, data)
     .then((response) => {
-      const accessToken = response.data.accessToken;
-      const userProfile = {
-        name: response.data.name,
-        email: response.data.email,
-        bio: response.data.bio,
-        avatar: response.data.avatar,
-        banner: response.data.banner,
-        venueManager: response.data.venueManager,
-      };
-
-      if (!accessToken || !userProfile) {
-        throw new Error('Invalid login response format');
+      if (!response) {
+        throw new Error('Failed to create venue');
       }
-
-      return { accessToken, userProfile };
+      return response.data;
     })
     .catch((err) => {
-      console.error('Error during login:', err);
+      console.error('Error creating venue:', err);
       throw err;
     });
 };
 
-
-// In ApiManager.js
-static singleProfile = (name) => {
-  const url = `${BASE_URL}${ENDPOINTS.SINGLE_PROFILE(name)}`;
-  console.log('Requesting URL:', url); 
-  return ApiMethods.get(url);
+static updateVenue = async (id, data) => {
+  const url = BASE_URL + ENDPOINTS.UPDATE_VENUE(id);
+  return ApiMethods.put(url, data)
+    .then((response) => {
+      if (!response) {
+        throw new Error('Failed to update venue');
+      }
+      return response.data;
+    })
+    .catch((err) => {
+      console.error('Error updating venue:', err);
+      throw err;
+    });
 };
 
-static editProfile = (name, data) => {
-  const url = `${BASE_URL}${ENDPOINTS.EDIT_PROFILE(name)}`;
-  return ApiMethods.put(url, data);
+//Bookings
+
+static BookingsByProfile = (name) => {
+  const url = new URL(BASE_URL + ENDPOINTS.BOOKINGS_BY_PROFILE(name));
+  url.searchParams.append('_venue', 'true'); 
+  url.searchParams.append('_customer', 'true');
+  console.log('Requesting URL:', url.toString());
+  return ApiMethods.get(url.toString());
 };
 
 
+  //Profile
+static singleProfile = (name, params = { _bookings: true, _venues: true }) => {
+  const url = new URL(`${BASE_URL}${ENDPOINTS.SINGLE_PROFILE(name)}`);
 
+  Object.keys(params).forEach((key) => {
+    if (params[key] !== undefined) {
+      url.searchParams.append(key, params[key]);
+    }
+  });
 
+  console.log('Requesting URL:', url.toString());
+
+  return ApiMethods.get(url.toString());
+};
+
+  static editProfile = (name, data) => {
+    const url = `${BASE_URL}${ENDPOINTS.EDIT_PROFILE(name)}`;
+    return ApiMethods.put(url, data);
+  };
 }
 
 export default ApiManager;
