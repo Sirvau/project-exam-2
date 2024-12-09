@@ -1,11 +1,50 @@
-import ProfileBookingRow from '../booking-row';
+import { useEffect } from 'react';
+import { loadFromStorage } from '../../../stores/local-storage';
+import TableRowTemplate from '../../table-row-template';
+import useBookingsStore from '../../../stores/booking-store';
 
-function BookingList() {
+const BookingList = () => {
+  const { fetchProfileBookings, bookingsByProfile, loading, error } = useBookingsStore();
+  const profileName = loadFromStorage('userProfile')?.name;
+
+  useEffect(() => {
+    if (profileName) {
+      fetchProfileBookings(profileName);
+    }
+  }, [profileName, fetchProfileBookings]);
+
+  if (!profileName) return <div>No profile selected.</div>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
   return (
-    <section>
-      <ProfileBookingRow />
-    </section>
+    <div>
+      {bookingsByProfile && bookingsByProfile.length > 0 ? (
+        bookingsByProfile.map((booking) => {
+          const isBooked = booking.dateFrom && booking.dateTo;
+          const status = isBooked ? 'Booked' : 'Available';
+          const date = isBooked
+            ? `From: ${new Date(booking.dateFrom).toLocaleDateString()} To: ${new Date(booking.dateTo).toLocaleDateString()}`
+            : '';
+
+          return (
+            <TableRowTemplate
+              key={booking.id}
+              media={booking.venue.media?.[0]?.url || 'https://via.placeholder.com/150'}
+              title={booking.venue.name}
+              description={booking.venue.description || 'No description available'}
+              status={status}
+              date={date}
+              persons={booking.guests || 0}
+              amount={booking.venue.price || 0}
+            />
+          );
+        })
+      ) : (
+        <p>No bookings available.</p>
+      )}
+    </div>
   );
-}
+};
 
 export default BookingList;
