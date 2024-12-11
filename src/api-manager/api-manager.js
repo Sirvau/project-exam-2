@@ -75,6 +75,15 @@ static updateVenue = async (id, data) => {
     });
 };
 
+static deleteVenue = async (id) => {
+  const url = BASE_URL + ENDPOINTS.DELETE_VENUE(id);
+  ApiMethods.delete(url)
+    .catch((err) => {
+      console.error('Error deleting venue:', err);
+      throw err;
+    });
+};
+
 //Bookings
 
 static BookingsByProfile = (name) => {

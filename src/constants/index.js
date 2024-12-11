@@ -23,6 +23,7 @@ const ENDPOINTS = {
     ALL_VENUES: () => `${ALL_VENUES}`,
     CREATE_VENUE: () => `${ALL_VENUES}`,
     UPDATE_VENUE: (id) => `${ALL_VENUES}/${id}`,
+    DELETE_VENUE: (id) => `${ALL_VENUES}/${id}`,
     VENUES_BY_PROFILE: (name) => `${SINGLE_PROFILE}/${name}/venues`,
     BOOKINGS_BY_PROFILE: (name) => `${SINGLE_PROFILE}/${name}/bookings`,
 

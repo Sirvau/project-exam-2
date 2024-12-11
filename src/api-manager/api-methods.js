@@ -8,14 +8,14 @@ import { getHeaders } from "./headers";
         method,
         headers: requireHeaders ? getHeaders() : {},
       };
-  
-      if (method !== 'GET' && method !== 'HEAD') {
+    
+      if (method !== 'GET' && method !== 'HEAD' && method !== "DELETE") {
         options.body = JSON.stringify(body); 
       }
   
       return new Promise((resolve, reject) => {
         fetch(url, options)
-          .then((res) => res.json())
+          .then((res) => res.status !== 204 && res.json())
           .then(resolve)
           .catch(reject);
       });
