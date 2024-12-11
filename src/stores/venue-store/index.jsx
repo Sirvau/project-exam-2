@@ -8,12 +8,12 @@ export const useVenueStore = create((set) => ({
   error: null,
 
   // Fetch all venues
-  fetchVenues: async () => {
+  fetchVenues: async (owner = true, bookings = true) => {
     set({ loading: true, error: null });
     try {
       const response = await ApiManager.getAllVenues({
-        _owner: true,
-        _bookings: true
+        _owner: owner,
+        _bookings: bookings
       });
       set({ venues: response.data, loading: false });
       console.log('All Venues:', response.data);

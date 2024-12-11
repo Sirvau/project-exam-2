@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useEffect, useRef } from 'react';
 
 export function Modal({
   id,
@@ -9,14 +10,31 @@ export function Modal({
   modalImg,
   form,
   button,
-  deviderLine
+  deviderLine,
+  isOpen,
+  onClose
 }) {
+  const dialogElement = useRef();
+
+  useEffect(() => {
+    if (isOpen) {
+      dialogElement.current.showModal();
+    } else {
+      dialogElement.current.close();
+    }
+  }, [isOpen]);
+
   return (
     <div>
-      <dialog id={id} className="modal bg-modal modal-middle flex justify-center">
+      <dialog
+        id={id}
+        ref={dialogElement}
+        className="modal bg-modal modal-middle flex justify-center">
         <div className="w-3/4 sm:w-2/3 md:w-3/4 bg-primary md:flex lg:w-3/5 xl:w-1/2 max-h-[620px] relative">
           <form method="dialog">
-            <button className="btn btn-sm btn-ghost absolute right-4 top-4">✕</button>
+            <button className="btn btn-sm btn-ghost absolute right-4 top-4" onClick={onClose}>
+              ✕
+            </button>
           </form>
           <div className="hidden md:block">{modalImg}</div>
           <div className="main-content-container">
@@ -47,7 +65,9 @@ Modal.propTypes = {
   modalImg: PropTypes.node,
   form: PropTypes.node,
   button: PropTypes.node,
-  deviderLine: PropTypes.node
+  deviderLine: PropTypes.node,
+  isOpen: PropTypes.bool,
+  onClose: PropTypes.func
 };
 
 export default Modal;

@@ -21,7 +21,6 @@ const MyVenuesTableRow = () => {
 
   const handleEdit = (venueId) => {
     setSelectedVenueId(venueId);
-    document.getElementById('update-venue-modal').showModal();
   };
 
   const handleDelete = (venueId) => {
@@ -58,7 +57,7 @@ const MyVenuesTableRow = () => {
       )}
 
       {/* Reusable UpdateVenueModal Component */}
-      <UpdateVenueModal venueId={selectedVenueId} />
+      {selectedVenueId && <UpdateVenueModal venueId={selectedVenueId} />}
     </div>
   );
 };
