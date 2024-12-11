@@ -43,6 +43,17 @@ export const useVenueStore = create((set) => ({
         profileVenues: state.profileVenues
       };
     });
+  },
+
+  // Remove profile venue
+  removeProfileVenue: (venueId) => {
+    set((state) => {
+      const index = state.profileVenues.findIndex((venue) => venue.id === venueId);
+      state.profileVenues.splice(index, 1);
+      return {
+        profileVenues: state.profileVenues
+      };
+    });
   }
 }));
 
