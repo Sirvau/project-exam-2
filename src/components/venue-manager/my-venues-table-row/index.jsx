@@ -57,7 +57,9 @@ const MyVenuesTableRow = () => {
       )}
 
       {/* Reusable UpdateVenueModal Component */}
-      {selectedVenueId && <UpdateVenueModal venueId={selectedVenueId} />}
+      {selectedVenueId && (
+        <UpdateVenueModal venueId={selectedVenueId} onClose={() => setSelectedVenueId(null)} />
+      )}
     </div>
   );
 };

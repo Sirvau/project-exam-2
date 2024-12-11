@@ -32,6 +32,17 @@ export const useVenueStore = create((set) => ({
     } catch (err) {
       set({ error: err.message || 'Failed to fetch profile venues', loading: false });
     }
+  },
+
+  // Update venue
+  updateProfileVenue: (venueId, data) => {
+    set((state) => {
+      const index = state.profileVenues.findIndex((venue) => venue.id === venueId);
+      state.profileVenues.splice(index, 1, data);
+      return {
+        profileVenues: state.profileVenues
+      };
+    });
   }
 }));
 

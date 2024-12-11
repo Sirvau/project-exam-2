@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import SubmitButton from '../../components/buttons/submit-button';
 import CustomInput from '../../components/inputs';
 import ApiManager from '../../api-manager/api-manager';
+import useVenueStore from '../../stores/venue-store';
 
 // Validation schema
 const schema = yup
@@ -20,9 +21,10 @@ const schema = yup
     media: yup.string().url('Please enter a valid URL').required('Please provide an image URL')
   })
   .required();
-export function UpdateVenueForm({ venueData }) {
+export function UpdateVenueForm({ venueData, onSubmit }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { updateProfileVenue } = useVenueStore();
 
   const {
     register,
@@ -53,7 +55,7 @@ export function UpdateVenueForm({ venueData }) {
     }
   }, [venueData, setValue]);
 
-  const onSubmit = async (data) => {
+  const _onSubmit = async (data) => {
     if (!venueData?.id) {
       setError('Venue ID is missing.');
       return;
@@ -77,8 +79,9 @@ export function UpdateVenueForm({ venueData }) {
 
     try {
       const response = await ApiManager.updateVenue(venueData.id, requestBody);
+      updateProfileVenue(venueData.id, response);
+      if (onSubmit) onSubmit();
       console.log('Venue updated successfully:', response);
-      alert('Venue updated successfully!');
     } catch (err) {
       setError(err.response?.data?.message || 'Error updating venue. Please try again.');
       console.error(err);
@@ -88,7 +91,7 @@ export function UpdateVenueForm({ venueData }) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-full max-w-lg p-6">
+    <form onSubmit={handleSubmit(_onSubmit)} className="flex flex-col gap-4 w-full max-w-lg p-6">
       <CustomInput
         id="name"
         name="name"
