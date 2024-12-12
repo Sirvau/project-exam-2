@@ -5,11 +5,11 @@ import HeroSection from '../../components/hero';
 
 function HomePage() {
   return (
-    <div className="mb-44">
+    <div className="mb-44 overflow-visible">
       <SignInModal />
       <RegisterModal />
       <HeroSection />
-      <section className="">
+      <section>
         <VenueList />
       </section>
     </div>
