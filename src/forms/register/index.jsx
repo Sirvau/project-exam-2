@@ -107,6 +107,17 @@ export function RegisterForm() {
             {errors.password?.message}
           </p>
         </div>
+        {/* Venue Manager Toggle */}
+        <div className="form-control">
+          <label className="label cursor-pointer flex justify-center gap-4">
+            <span className="label-text text-tBase">I want to be a venue manager</span>
+            <input
+              type="checkbox"
+              {...register('venueManager')}
+              className="toggle hover:bg-tBase bg-primary"
+            />
+          </label>
+        </div>
 
         <div className="flex justify-center">
           <SubmitButton buttonText="Register" />
