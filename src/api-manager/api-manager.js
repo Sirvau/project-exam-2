@@ -94,6 +94,21 @@ static BookingsByProfile = (name) => {
   return ApiMethods.get(url.toString());
 };
 
+static createBooking = async (data) => {
+  const url = BASE_URL + ENDPOINTS.CREATE_BOOKING();
+  return ApiMethods.post(url, data)
+    .then((response) => {
+      if (!response) {
+        throw new Error('Failed to book venue');
+      }
+      return response.data;
+    })
+    .catch((err) => {
+      console.error('Error booking venue:', err);
+      throw err;
+    });
+};
+
 
   //Profile
 static singleProfile = (name, params = { _bookings: true, _venues: true }) => {

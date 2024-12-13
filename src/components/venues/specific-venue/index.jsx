@@ -5,6 +5,8 @@ import ImageSlider from '../../image-slider';
 import SingleImage from '../../single-image';
 import { pinIcon, starIcon, parking, wifi, breakfast, pets, checkTrue, xFalse } from '../../icons';
 import DeviderLine from '../../devider-line';
+import BookingCalendar from '../../calender';
+import ApiManager from '../../../api-manager/api-manager';
 
 function SpecificVenue() {
   const { id } = useParams();
@@ -22,6 +24,23 @@ function SpecificVenue() {
   const venue = venues.find((venue) => venue.id === id);
 
   if (!venue) return <p>Venue not found.</p>;
+
+  const handleBookingSubmit = async (range) => {
+    const requestBody = {
+      dateFrom: range[0].toISOString(),
+      dateTo: range[1].toISOString(),
+      guests: 1, // Adjust or fetch this value dynamically
+      venueId: venue.id
+    };
+    try {
+      const response = await ApiManager.createBooking(requestBody);
+      console.log('Booking successful:', response);
+      alert('Booking successful!');
+    } catch (err) {
+      console.error('Error creating booking:', err);
+      alert('Failed to create booking. Please try again.');
+    }
+  };
 
   return (
     <div className="md:flex md:justify-center">
@@ -89,18 +108,7 @@ function SpecificVenue() {
           <h2 className="font-header text-xl font-semibold tracking-wider mb-1">Book venue</h2>
           <DeviderLine />
           {/* Bookings */}
-          {venue.bookings && venue.bookings.length > 0 && (
-            <div className="mb-6 mt-12">
-              <ul className="space-y-1">
-                {venue.bookings.map((booking) => (
-                  <li key={booking.id}>
-                    From: {new Date(booking.dateFrom).toLocaleDateString()} - To:{' '}
-                    {new Date(booking.dateTo).toLocaleDateString()} ({booking.guests} guests)
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          <BookingCalendar bookings={venue.bookings} onBookingSubmit={handleBookingSubmit} />
         </div>
         <div className="flex items-end mt-6 ">
           <div className="flex flex-col">

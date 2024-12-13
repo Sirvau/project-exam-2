@@ -6,12 +6,14 @@ const REGISTER = import.meta.env.VITE_API_REGISTER;
 const ALL_VENUES = import.meta.env.VITE_API_ALL_VENUES;
 const EDIT_PROFILE = import.meta.env.VITE_API_EDIT_PROFILE;
 const SINGLE_PROFILE = import.meta.env.VITE_API_SINGLE_PROFILE;
+const CREATE_BOOKING = import.meta.env.VITE_API_CREATE_BOOKING;
 
 export const API_KEY = import.meta.env.VITE_API_KEY;
 export const LOGIN_URL = `${BASE_URL}${LOGIN}`;
 export const REGISTER_URL = `${BASE_URL}${REGISTER}`;
 export const ALL_VENUES_URL = `${BASE_URL}${ALL_VENUES}`;
 export const EDIT_PROFILE_URL = `${BASE_URL}${EDIT_PROFILE}`;
+
 
 
 
@@ -26,7 +28,7 @@ const ENDPOINTS = {
     DELETE_VENUE: (id) => `${ALL_VENUES}/${id}`,
     VENUES_BY_PROFILE: (name) => `${SINGLE_PROFILE}/${name}/venues`,
     BOOKINGS_BY_PROFILE: (name) => `${SINGLE_PROFILE}/${name}/bookings`,
-
+    CREATE_BOOKING: () => `${CREATE_BOOKING}`
 };
 
 export default ENDPOINTS
