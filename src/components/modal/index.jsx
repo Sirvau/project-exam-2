@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
+import { useModalStore } from '../../stores/modal-store';
 
 export function Modal({
   id,
@@ -10,17 +11,17 @@ export function Modal({
   modalImg,
   form,
   button,
-  deviderLine,
-  isOpen,
-  onClose
+  deviderLine
 }) {
   const dialogElement = useRef();
+  const isOpen = useModalStore((state) => state.modals[id]);
+  const closeModal = useModalStore((state) => state.closeModal);
 
   useEffect(() => {
     if (isOpen) {
-      dialogElement.current.showModal();
+      dialogElement.current?.showModal();
     } else {
-      dialogElement.current.close();
+      dialogElement.current?.close();
     }
   }, [isOpen]);
 
@@ -32,7 +33,9 @@ export function Modal({
         className="modal bg-modal modal-middle flex justify-center">
         <div className="w-3/4 sm:w-2/3 md:w-3/4 bg-primary md:flex lg:w-3/5 xl:w-1/2 max-h-[620px] relative">
           <form method="dialog">
-            <button className="btn btn-sm btn-ghost absolute right-4 top-4" onClick={onClose}>
+            <button
+              className="btn btn-sm btn-ghost absolute right-4 top-4"
+              onClick={() => closeModal(id)}>
               ✕
             </button>
           </form>
@@ -65,9 +68,7 @@ Modal.propTypes = {
   modalImg: PropTypes.node,
   form: PropTypes.node,
   button: PropTypes.node,
-  deviderLine: PropTypes.node,
-  isOpen: PropTypes.bool,
-  onClose: PropTypes.func
+  deviderLine: PropTypes.node
 };
 
 export default Modal;
