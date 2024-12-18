@@ -2,12 +2,14 @@ import { NavLink } from 'react-router-dom';
 import Avatar from '../avatar';
 import { useUserStore } from '../../../../stores/user-store';
 import { useNavigate } from 'react-router-dom';
+import { useModalStore } from '../../../../stores/modal-store';
 
 function Nav() {
   const clearUser = useUserStore((state) => state.clearUser);
   const loggedIn = useUserStore((state) => state.isAuthenticated);
   const userProfile = useUserStore((state) => state.userProfile);
   const venueManager = userProfile?.venueManager || false;
+  const openModal = useModalStore((state) => state.openModal);
 
   const logout = () => {
     clearUser();
@@ -25,7 +27,7 @@ function Nav() {
           {!loggedIn && (
             <li
               className="hover:cursor-pointer hover:scale-105 duration-300 mt-4"
-              onClick={() => document.getElementById('sign-in-modal').showModal()}>
+              onClick={() => openModal('sign-in-modal')}>
               Register / Sign In
             </li>
           )}
