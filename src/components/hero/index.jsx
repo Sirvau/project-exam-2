@@ -1,10 +1,12 @@
-import SubtileButton from '../buttons/subtile-button';
 import { heroBackgroundImg } from '../../images';
-import { searchIcon } from '../icons';
+import SearchVenues from '../venues/search-venues';
+import useVenueStore from '../../stores/venue-store';
 
 function HeroSection() {
+  const { venues } = useVenueStore();
+
   return (
-    <section className="w-full relative py-10 px-4 border-0 rounded-sm overflow-hidden">
+    <section className="w-full relative py-10 px-4 border-0 rounded-sm">
       <div
         className="absolute inset-0 bg-cover bg-center opacity-70 max-h-96"
         style={{
@@ -20,13 +22,8 @@ function HeroSection() {
           <h1 className="font-header text-5xl sm:text-6xl text-primary font-semibold mt-6 mb-12 lg:mb-24 tracking-wide">
             Book Your Perfect Venue
           </h1>
-          <h3></h3>
+          <SearchVenues venues={venues} />
         </div>
-        <SubtileButton
-          buttonText="Search"
-          icon={searchIcon}
-          className="hover:bg-tBase hover:text-primary hover:scale-105 hover:duration-500"
-        />
       </form>
     </section>
   );

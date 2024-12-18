@@ -3,6 +3,7 @@ import registerImage from '../images/register-img.jpg';
 import editProfileImage from '../images/edit-profile-modal-img.jpg';
 import locationPlaceholderImage from '../images/location-image-placeholder.jpg';
 import heroBackgroundImage from '../images/hero-background.jpg';
+import createVenueImage from '../images/create-venue-img.jpg';
 
 export const signInImg = (
   <img
@@ -23,6 +24,14 @@ export const registerImg = (
 export const editProfileImg = (
   <img
     src={editProfileImage}
+    alt="Edit profile image"
+    className="hidden md:block w-full h-full object-cover"
+  />
+);
+
+export const createVenueImg = (
+  <img
+    src={createVenueImage}
     alt="Edit profile image"
     className="hidden md:block w-full h-full object-cover"
   />

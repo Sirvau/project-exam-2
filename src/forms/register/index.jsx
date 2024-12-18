@@ -4,8 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import SubmitButton from '../../components/buttons/submit-button';
 import CustomInput from '../../components/inputs';
 import { emailIcon, nameIcon, passwordIcon } from '../../components/icons';
-import useApi from '../../hooks/api/index';
-import { REGISTER_URL } from '../../constants';
+import ApiManager from '../../api-manager/api-manager.js';
 
 // Validation schema
 const schema = yup
@@ -43,11 +42,13 @@ export function RegisterForm() {
     resolver: yupResolver(schema)
   });
 
-  const { POST, error, loading } = useApi(`${REGISTER_URL}`);
-
   const onSubmit = async (data) => {
+    const registerModal = document.getElementById('register-modal');
+    const signInModal = document.getElementById('sign-in-modal');
     try {
-      await POST(data);
+      await ApiManager.register(data);
+      registerModal.close();
+      signInModal.showModal();
       console.log('Submitted from register form:', data);
     } catch (err) {
       console.error('Error submitting form:', err);
@@ -73,7 +74,7 @@ export function RegisterForm() {
             register={register}
           />
           <p className="text-xs text-orange-500 opacity-80 mt-1 mx-8 sm:mx-20">
-            {errors.fullName?.message}
+            {errors.name?.message}
           </p>
         </div>
 
@@ -106,13 +107,21 @@ export function RegisterForm() {
             {errors.password?.message}
           </p>
         </div>
+        {/* Venue Manager Toggle */}
+        <div className="form-control">
+          <label className="label cursor-pointer flex justify-center gap-4">
+            <span className="label-text text-tBase">I want to be a venue manager</span>
+            <input
+              type="checkbox"
+              {...register('venueManager')}
+              className="toggle hover:bg-tBase bg-primary"
+            />
+          </label>
+        </div>
 
         <div className="flex justify-center">
           <SubmitButton buttonText="Register" />
         </div>
-
-        {loading && <p className="text-xs text-secondary">Submitting...</p>}
-        {error && <p className="text-xs text-orange-500">Error: {error}</p>}
       </form>
     </div>
   );

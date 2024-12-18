@@ -103,7 +103,7 @@ export const cheveonDownIcon = (
 );
 
 export const starIcon = <i className="fa-solid fa-star text-secondary scale-90"></i>;
-export const personIcon = <i className="fa-solid fa-user-group scale-75"></i>;
+export const personIcon = <i className="fa-solid fa-user-group scale-90"></i>;
 export const pinIcon = <i className="fa-solid fa-location-dot scale-90"></i>;
 export const searchIcon = <i className="fa-solid fa-magnifying-glass"></i>;
 export const parking = <i className="fa-solid fa-car"></i>;

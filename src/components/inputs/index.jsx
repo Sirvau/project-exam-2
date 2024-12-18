@@ -12,7 +12,7 @@ const CustomInput = ({ type, icon, id, placeholder, register, name, className, .
             placeholder={placeholder}
             {...register(name)}
             {...props}
-            className={`input input-xs bg-modal max-w-xs h-auto my-2 tracking-wide ${className}`}
+            className={`input input-xs bg-modal max-w-xs h-auto my-2 tracking-wider text-sm  ${className}`}
           />
         ) : (
           <input
@@ -21,7 +21,7 @@ const CustomInput = ({ type, icon, id, placeholder, register, name, className, .
             placeholder={placeholder}
             {...register(name)}
             {...props}
-            className={`input input-xs bg-modal max-w-xs h-auto my-2 tracking-wide ${className}`}
+            className={`input input-xs bg-modal max-w-xs h-auto my-2 tracking-wider text-sm ${className}`}
           />
         )}
       </div>

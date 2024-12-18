@@ -1,35 +1,31 @@
-import * as yup from 'yup';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect } from 'react';
+import * as yup from 'yup';
 import SubmitButton from '../../components/buttons/submit-button';
 import CustomInput from '../../components/inputs';
-import useApi from '../../hooks/api/index';
+import ApiManager from '../../api-manager/api-manager';
 import { useUserStore } from '../../stores/user-store';
-import { EDIT_PROFILE_URL } from '../../constants';
 
 // Validation schema
 const schema = yup.object({
-  banner: yup
+  bannerUrl: yup
     .string()
     .matches(
       /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/\S*)?$/,
-      'Please enter a fully formed URL that links to a live, publicly accessible image.'
+      'Please enter a valid URL for the banner image.'
     ),
-  avatar: yup
+  avatarUrl: yup
     .string()
     .matches(
       /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/\S*)?$/,
-      'Please enter a fully formed URL that links to a live, publicly accessible image.'
+      'Please enter a valid URL for the avatar image.'
     ),
-  bio: yup.string().max(160, 'Please use less than 160 characters in your bio')
+  bio: yup.string().max(160, 'Bio must be under 160 characters.')
 });
 
-// Edit Profile Form
-export function EditProfileForm() {
-  const { userData } = useUserStore();
-  const userName = userData?.data?.name;
-
+const EditProfileForm = () => {
+  const { userProfile, setUserProfile } = useUserStore();
   const {
     register,
     handleSubmit,
@@ -38,46 +34,40 @@ export function EditProfileForm() {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      banner: '',
-      avatar: '',
-      bio: ''
+      bannerUrl: '',
+      avatarUrl: '',
+      bio: '',
+      venueManager: false
     }
   });
 
-  const { PUT, error, loading } = useApi(userName ? `${EDIT_PROFILE_URL}/${userName}` : null);
-
   useEffect(() => {
-    if (userData?.data) {
+    if (userProfile) {
       reset({
-        banner: userData.data.banner?.url || '',
-        avatar: userData.data.avatar?.url || '',
-        bio: userData.data.bio || ''
+        bio: userProfile.bio || '',
+        avatarUrl: userProfile.avatar?.url || '',
+        bannerUrl: userProfile.banner?.url || '',
+        venueManager: userProfile.venueManager || false
       });
     }
-  }, [userData, reset]);
+  }, [userProfile, reset]);
 
   const onSubmit = async (data) => {
-    const { banner, avatar, bio } = data;
+    const { bio, avatarUrl, bannerUrl, venueManager } = data;
 
-    const requestBody = {
-      banner: { url: banner, alt: '' },
-      avatar: { url: avatar, alt: '' },
-      bio
+    const payload = {
+      bio,
+      avatar: { url: avatarUrl },
+      banner: { url: bannerUrl },
+      venueManager
     };
 
     try {
-      await PUT(requestBody);
-
-      useUserStore.getState().setUserData({
-        data: {
-          ...userData.data,
-          avatar: { url: avatar, alt: '' },
-          banner: { url: banner, alt: '' },
-          bio
-        }
-      });
-    } catch (err) {
-      console.error('Error submitting form:', err);
+      const response = await ApiManager.editProfile(userProfile.name, payload);
+      setUserProfile(response.data);
+      window.location.reload();
+    } catch (error) {
+      console.error('Error updating profile:', error);
     }
   };
 
@@ -86,37 +76,38 @@ export function EditProfileForm() {
       <form
         onSubmit={handleSubmit(onSubmit)}
         id="edit-profile-form"
-        method="PUT"
-        action=""
         className="mt-6 flex flex-col mx-auto">
+        {/* Banner URL Input */}
         <div className="relative">
           <label className="label text-xs font-semibold tracking-wider absolute ms-6">Banner</label>
           <CustomInput
-            id="banner"
-            name="banner"
+            id="bannerUrl"
+            name="bannerUrl"
             type="url"
             placeholder="Banner image URL"
             register={register}
           />
           <p className="text-xs text-orange-500 opacity-80 mt-1 mx-8 sm:mx-20">
-            {errors.banner?.message}
+            {errors.bannerUrl?.message}
           </p>
         </div>
 
+        {/* Avatar URL Input */}
         <div className="relative">
           <label className="label text-xs font-semibold tracking-wider absolute ms-6">Avatar</label>
           <CustomInput
-            id="avatar"
-            name="avatar"
+            id="avatarUrl"
+            name="avatarUrl"
             type="url"
             placeholder="Avatar image URL"
             register={register}
           />
           <p className="text-xs text-orange-500 opacity-80 mt-1 mx-8 sm:mx-20">
-            {errors.avatar?.message}
+            {errors.avatarUrl?.message}
           </p>
         </div>
 
+        {/* Bio Input */}
         <div className="relative">
           <label className="label text-xs font-semibold tracking-wider absolute ms-6">Bio</label>
           <CustomInput
@@ -125,22 +116,32 @@ export function EditProfileForm() {
             type="textarea"
             placeholder="Share something about yourself in your bio."
             register={register}
-            className="h-36"
+            className="h-24"
           />
           <p className="text-xs text-orange-500 opacity-80 mt-1 mx-8 sm:mx-20">
             {errors.bio?.message}
           </p>
         </div>
 
-        <div className="flex justify-center">
-          <SubmitButton buttonText="Submit edit" />
+        {/* Venue Manager Toggle */}
+        <div className="form-control">
+          <label className="label cursor-pointer flex justify-center gap-4">
+            <span className="label-text text-tBase">I want to be a venue manager</span>
+            <input
+              type="checkbox"
+              {...register('venueManager')}
+              className="toggle hover:bg-tBase bg-primary"
+            />
+          </label>
         </div>
 
-        {loading && <p className="text-xs text-secondary ms-6">Submitting...</p>}
-        {error && <p className="text-xs text-orange-500 ms-6">Error: {error}</p>}
+        {/* Submit Button */}
+        <div className="flex justify-center">
+          <SubmitButton buttonText="Update Profile" />
+        </div>
       </form>
     </div>
   );
-}
+};
 
 export default EditProfileForm;
