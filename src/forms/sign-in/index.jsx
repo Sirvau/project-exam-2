@@ -6,6 +6,7 @@ import CustomInput from '../../components/inputs';
 import { emailIcon, passwordIcon } from '../../components/icons';
 import ApiManager from '../../api-manager/api-manager.js';
 import useUserStore from '../../stores/user-store';
+import { useModalStore } from '../../stores/modal-store';
 
 // Validation schema
 const schema = yup
@@ -25,6 +26,7 @@ export function SignInForm() {
   });
 
   const { setUserProfile, setAccessToken } = useUserStore();
+  const closeModal = useModalStore((state) => state.closeModal);
 
   const onSubmit = async (data) => {
     try {
@@ -34,6 +36,8 @@ export function SignInForm() {
       setAccessToken(accessToken);
 
       console.log('User logged in:', userProfile);
+
+      closeModal('sign-in-modal');
     } catch (err) {
       console.error('Login failed:', err);
     }
