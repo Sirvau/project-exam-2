@@ -1,33 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Modal from '../../components/modal';
 import UpdateVenueForm from '../../forms/update-venue';
 import { editProfileImg } from '../../images';
 import { useVenueStore } from '../../stores/venue-store';
+import { useModalStore } from '../../stores/modal-store';
 
-function UpdateVenueModal({ venueId, onClose }) {
-  const [showModal, setShowModal] = useState(false);
+function UpdateVenueModal({ venueId }) {
   const profileVenues = useVenueStore((state) => state.profileVenues);
   const venueData = venueId ? profileVenues.find((venue) => venue.id === venueId) : null;
 
-  useEffect(() => {
-    if (venueId) {
-      setShowModal(true);
-    }
-  }, [venueId]);
-
-  const _onClose = () => {
-    setShowModal(false);
-    if (onClose) onClose();
-  };
+  const closeModal = useModalStore((state) => state.closeModal);
 
   return (
     <Modal
       id="update-venue-modal"
       header="Update Venue"
       modalImg={editProfileImg}
-      isOpen={showModal}
-      onClose={_onClose}
-      form={<UpdateVenueForm venueData={venueData} onSubmit={_onClose} />}
+      form={
+        <UpdateVenueForm venueData={venueData} onSubmit={() => closeModal('update-venue-modal')} />
+      }
     />
   );
 }

@@ -4,12 +4,15 @@ import { loadFromStorage } from '../../../stores/local-storage';
 import TableRowTemplate from '../../table-row-template';
 import UpdateVenueModal from '../../../modals/admin-venues/update-venue';
 import DeleteVenueModal from '../../../modals/admin-venues/delete-venue';
+import { useModalStore } from '../../../stores/modal-store';
 
 const MyVenuesTableRow = () => {
   const { profileVenues, fetchProfileVenues, loading, error } = useVenueStore();
   const profileName = loadFromStorage('userProfile')?.name;
   const [selectedVenueId, setSelectedVenueId] = useState(null);
   const [deleteVenueId, setDeleteVenueId] = useState(null);
+
+  const openModal = useModalStore((state) => state.openModal);
 
   useEffect(() => {
     if (profileName) {
@@ -23,9 +26,11 @@ const MyVenuesTableRow = () => {
 
   const handleEdit = (venueId) => {
     setSelectedVenueId(venueId);
+    openModal('update-venue-modal');
   };
 
   const handleDelete = (venueId) => {
+    openModal('delete-venue-modal');
     setDeleteVenueId(venueId);
   };
 
@@ -58,9 +63,7 @@ const MyVenuesTableRow = () => {
         <p>No venues available.</p>
       )}
 
-      {selectedVenueId && (
-        <UpdateVenueModal venueId={selectedVenueId} onClose={() => setSelectedVenueId(null)} />
-      )}
+      {selectedVenueId && <UpdateVenueModal venueId={selectedVenueId} />}
 
       {deleteVenueId && (
         <DeleteVenueModal
