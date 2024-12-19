@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Modal from '../../components/modal';
 import UpdateVenueForm from '../../forms/update-venue';
 import { editProfileImg } from '../../images';
@@ -22,5 +22,9 @@ function UpdateVenueModal({ venueId }) {
     />
   );
 }
+
+UpdateVenueModal.propTypes = {
+  venueId: PropTypes.string
+};
 
 export default UpdateVenueModal;
