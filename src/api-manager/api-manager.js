@@ -48,20 +48,26 @@ class ApiManager {
   };
   
 
-static createVenue = async (data) => {
-  const url = BASE_URL + ENDPOINTS.CREATE_VENUE();
-  return ApiMethods.post(url, data)
-    .then((response) => {
-      if (!response) {
-        throw new Error('Failed to create venue');
-      }
-      return response.data;
-    })
-    .catch((err) => {
-      console.error('Error creating venue:', err);
-      throw err;
-    });
-};
+  static createVenue = async (data, closeModalCallback) => {
+    const url = BASE_URL + ENDPOINTS.CREATE_VENUE();
+  
+    return ApiMethods.post(url.toString(), data)
+      .then((response) => {
+        if (!response) {
+          throw new Error('Failed to create venue');
+        }
+        
+        // Close the modal after a successful response
+        if (closeModalCallback) closeModalCallback();
+        
+        return response.data;
+      })
+      .catch((err) => {
+        console.error('Error creating venue:', err);
+        throw err;
+      });
+  };
+  
 
 static updateVenue = async (id, data) => {
   const url = BASE_URL + ENDPOINTS.UPDATE_VENUE(id);

@@ -5,6 +5,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import SubmitButton from '../../components/buttons/submit-button';
 import CustomInput from '../../components/inputs';
 import ApiManager from '../../api-manager/api-manager';
+import { useModalStore } from '../../stores/modal-store';
+import { useVenueStore } from '../../stores/venue-store';
 
 // Validation schema
 const schema = yup
@@ -24,6 +26,9 @@ const schema = yup
 export function CreateVenueForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const addProfileVenue = useVenueStore((state) => state.addProfileVenue);
+  const closeModal = useModalStore((state) => state.closeModal);
 
   const {
     register,
@@ -57,6 +62,8 @@ export function CreateVenueForm() {
     try {
       const response = await ApiManager.createVenue(requestBody);
       console.log('Venue created successfully:', response);
+      addProfileVenue(response);
+      closeModal('create-venue-modal');
     } catch (err) {
       setError('Error creating venue. Please try again.');
       console.error(err);

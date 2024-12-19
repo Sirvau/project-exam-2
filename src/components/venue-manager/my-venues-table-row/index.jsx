@@ -3,7 +3,6 @@ import { useVenueStore } from '../../../stores/venue-store';
 import { loadFromStorage } from '../../../stores/local-storage';
 import TableRowTemplate from '../../table-row-template';
 import UpdateVenueModal from '../../../modals/admin-venues/update-venue';
-import SmallModal from '../../../modals/info/small-modal';
 import DeleteVenueModal from '../../../modals/admin-venues/delete-venue';
 
 const MyVenuesTableRow = () => {
@@ -59,7 +58,6 @@ const MyVenuesTableRow = () => {
         <p>No venues available.</p>
       )}
 
-      {/* Reusable UpdateVenueModal Component */}
       {selectedVenueId && (
         <UpdateVenueModal venueId={selectedVenueId} onClose={() => setSelectedVenueId(null)} />
       )}
