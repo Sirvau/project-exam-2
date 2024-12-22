@@ -95,3 +95,4 @@ Special thanks to the Noroff School of Technology and Digital Media for providin
 
 **Siril O. Vaular**
 - Github: [@Sirvau](https://github.com/Sirvau)
+- LinkedIn: [@siril-olsen-vaular](www.linkedin.com/in/siril-olsen-vaular)
