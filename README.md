@@ -76,11 +76,11 @@ Holidaze is a modern platform that allows users to book holiday accommodations a
 
 ### Scripts
 
-**npm run dev:** Start the development server.
-**npm run build:** Build the application for production.
-**npm run lint:** Run ESLint to check for code issues.
-**npm run lint:fix:** Fix linting issues automatically.
-**npm run format:** Format the codebase with Prettier.
+- **npm run dev:** Start the development server.
+- **npm run build:** Build the application for production.
+- **npm run lint:** Run ESLint to check for code issues.
+- **npm run lint:fix:** Fix linting issues automatically.
+- **npm run format:** Format the codebase with Prettier.
 
 ## Deployment
 
@@ -93,5 +93,5 @@ Special thanks to the Noroff School of Technology and Digital Media for providin
 
 ## Author
 
-Siril O. Vaular
-[@Sirvau](https://github.com/Sirvau)
+**Siril O. Vaular**
+- Github: [@Sirvau](https://github.com/Sirvau)
