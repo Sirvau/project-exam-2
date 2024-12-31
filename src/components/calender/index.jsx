@@ -2,8 +2,10 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import useUserStore from '../../stores/user-store';
 
 function BookingCalendar({ bookings, onBookingSubmit }) {
+  const loggedIn = useUserStore((state) => state.isAuthenticated);
   const [selectedRange, setSelectedRange] = useState([null, null]);
   const [guests, setGuests] = useState('');
 
@@ -36,23 +38,26 @@ function BookingCalendar({ bookings, onBookingSubmit }) {
         value={selectedRange}
         className="react-calendar text-primary"
       />
-      <div className="my-6 text-center">
-        <input
-          id="guests"
-          type="number"
-          name="guests"
-          value={guests}
-          onChange={(e) => setGuests(e.target.value)}
-          placeholder="Number of guests"
-          className="rounded px-3 py-2 text-light bg-modal w-full"
-        />
-        <button
-          className="bg-tBase text-primary px-8 py-2 rounded ml-2 mt-8"
-          onClick={handleBooking}
-          disabled={!selectedRange[0] || !selectedRange[1] || guests <= 0}>
-          Book Now
-        </button>
-      </div>
+      {loggedIn && (
+        <div className="my-6 text-center">
+          <input
+            id="guests"
+            type="number"
+            name="guests"
+            value={guests}
+            onChange={(e) => setGuests(e.target.value)}
+            placeholder="Number of guests"
+            className="rounded px-3 py-2 text-light bg-modal w-full"
+          />
+
+          <button
+            className="bg-tBase text-primary px-8 py-2 rounded ml-2 mt-8"
+            onClick={handleBooking}
+            disabled={!selectedRange[0] || !selectedRange[1] || guests <= 0}>
+            Book Now
+          </button>
+        </div>
+      )}
     </div>
   );
 }
