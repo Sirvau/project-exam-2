@@ -3,7 +3,17 @@ import { useParams } from 'react-router-dom';
 import { useVenueStore } from '../../../stores/venue-store';
 import ImageSlider from '../../image-slider';
 import SingleImage from '../../single-image';
-import { pinIcon, starIcon, parking, wifi, breakfast, pets, checkTrue, xFalse } from '../../icons';
+import {
+  pinIcon,
+  starIcon,
+  parking,
+  wifi,
+  breakfast,
+  pets,
+  checkTrue,
+  xFalse,
+  personIcon
+} from '../../icons';
 import DeviderLine from '../../devider-line';
 import BookingCalendar from '../../calender';
 import ApiManager from '../../../api-manager/api-manager';
@@ -25,13 +35,15 @@ function SpecificVenue() {
 
   if (!venue) return <p>Venue not found.</p>;
 
-  const handleBookingSubmit = async (range) => {
+  const handleBookingSubmit = async (bookingDetails) => {
+    const { dateFrom, dateTo, guests } = bookingDetails;
     const requestBody = {
-      dateFrom: range[0].toISOString(),
-      dateTo: range[1].toISOString(),
-      guests: 1, // Adjust or fetch this value dynamically
+      dateFrom: dateFrom.toISOString(),
+      dateTo: dateTo.toISOString(),
+      guests,
       venueId: venue.id
     };
+
     try {
       const response = await ApiManager.createBooking(requestBody);
       console.log('Booking successful:', response);
@@ -75,6 +87,9 @@ function SpecificVenue() {
                   'Secret Location'}
               </p>
             </div>
+            <p className="text-sm tracking-wide">
+              {personIcon} {venue.maxGuests} guests
+            </p>
             <p className="mt-6">{venue.description}</p>
           </div>
         </div>
