@@ -44,7 +44,6 @@ export function UpdateVenueForm({ venueData, onSubmit }) {
     }
   });
 
-  // Dynamically update form values if venueData changes
   useEffect(() => {
     if (venueData) {
       setValue('name', venueData.name);
@@ -68,7 +67,7 @@ export function UpdateVenueForm({ venueData, onSubmit }) {
       price: data.price,
       maxGuests: data.maxGuests,
       media: [{ url: data.media, alt: `${data.name} image` }],
-      meta: venueData.meta, // Assuming meta doesn't change
+      meta: venueData.meta,
       location: {
         ...venueData.location,
         city: data.city
@@ -153,7 +152,7 @@ export function UpdateVenueForm({ venueData, onSubmit }) {
 
 UpdateVenueForm.propTypes = {
   venueData: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     name: PropTypes.string,
     description: PropTypes.string,
     price: PropTypes.number,
@@ -168,7 +167,7 @@ UpdateVenueForm.propTypes = {
       city: PropTypes.string
     }),
     meta: PropTypes.object
-  }).isRequired,
+  }),
   onSubmit: PropTypes.func
 };
 

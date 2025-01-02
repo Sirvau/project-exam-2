@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 
 function SmallModal({ isOpen, children }) {
   const dialogElement = useRef();
@@ -14,12 +15,15 @@ function SmallModal({ isOpen, children }) {
   return (
     <div>
       <dialog ref={dialogElement} className="modal bg-modal modal-middle flex justify-center">
-        <div className="w-3/4 sm:w-2/3 md:w-3/4 bg-primary md:flex lg:w-3/5 xl:w-1/2 max-h-[620px] relative">
-          {children}
-        </div>
+        <div className=" bg-primary md:flex relative py-8 px-4 ">{children}</div>
       </dialog>
     </div>
   );
 }
+
+SmallModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired
+};
 
 export default SmallModal;
