@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 function SearchVenues({ venues = [] }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -35,4 +36,14 @@ function SearchVenues({ venues = [] }) {
     </div>
   );
 }
+
+SearchVenues.propTypes = {
+  venues: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      name: PropTypes.string.isRequired
+    })
+  )
+};
+
 export default SearchVenues;
