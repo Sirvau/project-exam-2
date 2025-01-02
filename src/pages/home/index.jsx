@@ -2,6 +2,7 @@ import SignInModal from '../../modals/sign-in';
 import RegisterModal from '../../modals/register';
 import VenueList from '../../components/venues/venue-list';
 import HeroSection from '../../components/hero';
+import ToTopButton from '../../components/buttons/to-top-button';
 
 function HomePage() {
   return (
@@ -12,6 +13,9 @@ function HomePage() {
       <section>
         <VenueList />
       </section>
+      <div className="flex justify-center mt-36">
+        <ToTopButton />
+      </div>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import Logo from '../logo';
 
 function Header() {
   return (
-    <div className="mb-12">
+    <div id="header" className="mb-12">
       <Nav />
       <Logo />
       <hr className="mt-12 border-overlayLighter"></hr>
