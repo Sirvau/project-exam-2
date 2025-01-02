@@ -7,16 +7,20 @@ export const useVenueStore = create((set) => ({
   loading: true,
   error: null,
 
-  fetchVenues: async (owner = true, bookings = true) => {
+  fetchVenues: async (owner = true, bookings = true, page = 1, limit = 12) => {
     set({ loading: true, error: null });
     try {
       const response = await ApiManager.getAllVenues({
         _owner: owner,
-        _bookings: bookings
+        _bookings: bookings,
+        page,
+        limit
       });
       set({ venues: response.data, loading: false });
+      return response;
     } catch (err) {
       set({ error: err.message || 'Failed to fetch venues', loading: false });
+      throw err;
     }
   },
 
