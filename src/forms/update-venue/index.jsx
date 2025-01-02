@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import * as yup from 'yup';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -91,7 +92,9 @@ export function UpdateVenueForm({ venueData, onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit(_onSubmit)} className="flex flex-col gap-4 w-full max-w-lg p-6">
+    <form
+      onSubmit={handleSubmit(_onSubmit)}
+      className="flex flex-col items-center gap-1 w-full max-w-lg p-6">
       <CustomInput
         id="name"
         name="name"
@@ -110,12 +113,14 @@ export function UpdateVenueForm({ venueData, onSubmit }) {
       />
       <CustomInput
         id="description"
+        className="h-36"
         name="description"
         type="textarea"
         placeholder="Description"
         register={register}
         error={errors.description?.message}
       />
+
       <CustomInput
         id="maxGuests"
         name="maxGuests"
@@ -145,5 +150,26 @@ export function UpdateVenueForm({ venueData, onSubmit }) {
     </form>
   );
 }
+
+UpdateVenueForm.propTypes = {
+  venueData: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    price: PropTypes.number,
+    maxGuests: PropTypes.number,
+    media: PropTypes.arrayOf(
+      PropTypes.shape({
+        url: PropTypes.string,
+        alt: PropTypes.string
+      })
+    ),
+    location: PropTypes.shape({
+      city: PropTypes.string
+    }),
+    meta: PropTypes.object
+  }).isRequired,
+  onSubmit: PropTypes.func
+};
 
 export default UpdateVenueForm;

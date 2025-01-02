@@ -74,7 +74,9 @@ export function CreateVenueForm() {
 
   return (
     <div className="flex justify-center">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2 w-full max-w-lg p-6">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col items-center gap-1 w-full max-w-lg p-6">
         <CustomInput
           id="name"
           name="name"
