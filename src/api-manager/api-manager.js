@@ -2,6 +2,7 @@ import { BASE_URL } from '../constants';
 import ENDPOINTS from '../constants';
 import ApiMethods from './api-methods';
 
+
 class ApiManager {
   //Auth
   static register = (data) => {
@@ -9,7 +10,7 @@ class ApiManager {
     return ApiMethods.post(url, data);
   };
 
-  static login = async (data, params = {}) => {
+  static login = async (data, params = {}, closeModalCallback) => {
     const url = new URL(BASE_URL + ENDPOINTS.LOGIN());
     Object.keys(params).forEach((key) => {
       url.searchParams.append(key, params[key]);
@@ -20,6 +21,8 @@ class ApiManager {
         if (!accessToken || !name) {
           throw new Error('Invalid login response');
         }
+      
+        if (closeModalCallback) closeModalCallback();
         return { accessToken, userProfile: { name, email, bio, avatar, banner, venueManager } };
       })
       .catch((err) => {
@@ -45,20 +48,26 @@ class ApiManager {
   };
   
 
-static createVenue = async (data) => {
-  const url = BASE_URL + ENDPOINTS.CREATE_VENUE();
-  return ApiMethods.post(url, data)
-    .then((response) => {
-      if (!response) {
-        throw new Error('Failed to create venue');
-      }
-      return response.data;
-    })
-    .catch((err) => {
-      console.error('Error creating venue:', err);
-      throw err;
-    });
-};
+  static createVenue = async (data, closeModalCallback) => {
+    const url = BASE_URL + ENDPOINTS.CREATE_VENUE();
+  
+    return ApiMethods.post(url.toString(), data)
+      .then((response) => {
+        if (!response) {
+          throw new Error('Failed to create venue');
+        }
+        
+        // Close the modal after a successful response
+        if (closeModalCallback) closeModalCallback();
+        
+        return response.data;
+      })
+      .catch((err) => {
+        console.error('Error creating venue:', err);
+        throw err;
+      });
+  };
+  
 
 static updateVenue = async (id, data) => {
   const url = BASE_URL + ENDPOINTS.UPDATE_VENUE(id);
