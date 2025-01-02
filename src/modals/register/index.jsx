@@ -9,9 +9,10 @@ function RegisterModal() {
     <div>
       <Modal
         id="register-modal"
+        className="w-3/4 sm:w-2/3 md:w-3/4 bg-primary md:flex lg:w-3/5 xl:w-1/2 max-h-[620px] relative"
         header="Register"
         subtitle="as new customer"
-        subText="...and book an venue of your dreams"
+        subText="...and book a venue of your dreams"
         modalImg={registerImg}
         form={<RegisterForm />}
         bodyText="Already have an account?"

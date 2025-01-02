@@ -11,7 +11,8 @@ export function Modal({
   modalImg,
   form,
   button,
-  deviderLine
+  deviderLine,
+  className = ''
 }) {
   const dialogElement = useRef();
   const isOpen = useModalStore((state) => state.modals[id]);
@@ -27,21 +28,24 @@ export function Modal({
 
   return (
     <div>
-      <dialog
-        id={id}
-        ref={dialogElement}
-        className="modal bg-modal modal-middle flex justify-center">
-        <div className="w-3/4 sm:w-2/3 md:w-3/4 bg-primary md:flex lg:w-3/5 xl:w-1/2 max-h-[620px] relative">
+      <dialog className="modal bg-modal modal-middle" id={id} ref={dialogElement}>
+        <div className={`flex flex-col md:flex-row ${className}`}>
           <form method="dialog">
             <button
-              className="btn btn-sm btn-ghost absolute right-4 top-4"
+              className="btn btn-sm btn-ghost bg-primary rounded-full absolute right-4 top-4"
               onClick={() => closeModal(id)}>
               ✕
             </button>
           </form>
-          <div className="hidden md:block">{modalImg}</div>
-          <div className="main-content-container">
-            <div className="modal-header text-center mt-12">
+
+          {/* Modal Image Column */}
+          <div className="w-full md:w-1/2 h-auto bg-primary flex justify-center items-center">
+            {modalImg}
+          </div>
+
+          {/* Main Content Column */}
+          <div className="w-full md:w-1/2 p-6">
+            <div className="modal-header text-center mt-6">
               <h1 className="font-header text-3xl">{header}</h1>
               <h2 className="font-base mt-2">{subtitle}</h2>
               <p className="text-xs italic">{subText}</p>
@@ -49,7 +53,7 @@ export function Modal({
             <div>{form}</div>
             <div className="mb-4">{deviderLine}</div>
             <div className="text-center">
-              <p className="">{bodyText}</p>
+              <p>{bodyText}</p>
               <div className="pb-4 mt-4">{button}</div>
             </div>
           </div>
@@ -68,7 +72,8 @@ Modal.propTypes = {
   modalImg: PropTypes.node,
   form: PropTypes.node,
   button: PropTypes.node,
-  deviderLine: PropTypes.node
+  deviderLine: PropTypes.node,
+  className: PropTypes.string
 };
 
 export default Modal;
