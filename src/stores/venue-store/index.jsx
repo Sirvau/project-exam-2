@@ -7,14 +7,23 @@ export const useVenueStore = create((set) => ({
   loading: true,
   error: null,
 
-  fetchVenues: async (owner = true, bookings = true, page = 1, limit = 12) => {
+  fetchVenues: async (
+    owner = true,
+    bookings = true,
+    page = 1,
+    limit = 12,
+    sort = 'created',
+    sortOrder = 'asc'
+  ) => {
     set({ loading: true, error: null });
     try {
       const response = await ApiManager.getAllVenues({
         _owner: owner,
         _bookings: bookings,
         page,
-        limit
+        limit,
+        sort,
+        sortOrder
       });
       set({ venues: response.data, loading: false });
       return response;
@@ -23,7 +32,6 @@ export const useVenueStore = create((set) => ({
       throw err;
     }
   },
-
   fetchProfileVenues: async (profileName) => {
     set({ loading: true, error: null });
     try {

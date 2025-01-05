@@ -12,7 +12,7 @@ const VenueList = () => {
   useEffect(() => {
     const fetchAndSetVenues = async () => {
       try {
-        const response = await fetchVenues(true, true, currentPage, limit);
+        const response = await fetchVenues(true, true, currentPage, limit, 'created', 'asc');
         const { meta } = response;
         setTotalPages(Math.ceil(meta.totalCount / limit));
       } catch (err) {
