@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /**Color schemes*/
+    --color-primary: rgba(24, 24, 38);
+    --color-secondary: rgba(155, 240, 81, 0.8);
+    --color-text-base: rgba(163, 221, 221, 0.8);
+    --color-bg-modal: rgba(34, 34, 48);
+    --color-overlay-light: rgba(232, 232, 239, 0.05);
+    --color-overlay-lighter: rgba(232, 232, 239, 0.1);
+
+    /**Fonts*/
+    font-family: 'Inria Sans', 'Inria Serif', 'Inter', 'Avenir', Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+}
+
+.active {
+  text-decoration: underline;
+}
