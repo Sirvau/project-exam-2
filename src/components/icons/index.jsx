@@ -112,3 +112,6 @@ export const breakfast = <i className="fa-solid fa-mug-saucer"></i>;
 export const pets = <i className="fa-solid fa-dog"></i>;
 export const checkTrue = <i className="fa-solid fa-check scale-75"></i>;
 export const xFalse = <i className="fa-solid fa-x scale-75"></i>;
+export const chevronUp = <i className="fa-solid fa-chevron-up"></i>;
+export const previous = <i className="fa-solid fa-angle-left"></i>;
+export const next = <i className="fa-solid fa-angle-right"></i>;

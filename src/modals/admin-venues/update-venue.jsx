@@ -16,7 +16,7 @@ function UpdateVenueModal({ venueId }) {
           key={venueId}
           src={venueImage.url || `${createVenueImg}`}
           alt={venueImage.alt}
-          className="w-full h-full object-cover mb-2"
+          className="hidden md:block w-full h-full object-cover mb-2"
         />
       ))
     : [<div key={venueId}>{createVenueImg}</div>];
@@ -24,7 +24,7 @@ function UpdateVenueModal({ venueId }) {
   return (
     <Modal
       id="update-venue-modal"
-      className="w-3/4 sm:w-2/3 md:w-3/4 bg-primary md:flex lg:w-3/5 xl:w-1/2 max-h-[620px] relative"
+      className="w-3/4 sm:w-2/3 md:w-3/4 bg-primary md:flex lg:w-3/5 xl:w-1/2 md:max-h-[620px] relative"
       header="Update Venue"
       modalImg={venueMedia}
       form={

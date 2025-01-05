@@ -5,6 +5,7 @@ import TableRowTemplate from '../../table-row-template';
 import UpdateVenueModal from '../../../modals/admin-venues/update-venue';
 import DeleteVenueModal from '../../../modals/admin-venues/delete-venue';
 import { useModalStore } from '../../../stores/modal-store';
+import Loader from '../../animations';
 
 const MyVenuesTableRow = () => {
   const { profileVenues, fetchProfileVenues, loading, error } = useVenueStore();
@@ -20,8 +21,8 @@ const MyVenuesTableRow = () => {
     }
   }, [profileName, fetchProfileVenues]);
 
-  if (!profileName) return <div>No profile selected.</div>;
-  if (loading) return <div>Loading...</div>;
+  if (!profileName) return <div>Unfortunately we cannot find a profile</div>;
+  if (loading) return <Loader />;
   if (error) return <div>Error: {error}</div>;
 
   const handleEdit = (venueId) => {
@@ -60,7 +61,7 @@ const MyVenuesTableRow = () => {
           );
         })
       ) : (
-        <p>No venues available.</p>
+        <p>Create a venue and view it here...</p>
       )}
 
       {selectedVenueId && <UpdateVenueModal venueId={selectedVenueId} />}

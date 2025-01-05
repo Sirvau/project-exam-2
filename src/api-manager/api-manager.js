@@ -56,8 +56,7 @@ class ApiManager {
         if (!response) {
           throw new Error('Failed to create venue');
         }
-        
-        // Close the modal after a successful response
+      
         if (closeModalCallback) closeModalCallback();
         
         return response.data;

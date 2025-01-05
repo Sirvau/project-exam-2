@@ -2,6 +2,9 @@ import { useEffect } from 'react';
 import { loadFromStorage } from '../../../stores/local-storage';
 import TableRowTemplate from '../../table-row-template';
 import useBookingsStore from '../../../stores/booking-store';
+import Loader from '../../animations';
+import FocusButton from '../../buttons/focus-button';
+import { Link } from 'react-router-dom';
 
 const BookingList = () => {
   const { fetchProfileBookings, bookingsByProfile, loading, error } = useBookingsStore();
@@ -14,7 +17,7 @@ const BookingList = () => {
   }, [profileName, fetchProfileBookings]);
 
   if (!profileName) return <div>No profile selected.</div>;
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
   if (error) return <div>Error: {error}</div>;
 
   return (
@@ -41,7 +44,12 @@ const BookingList = () => {
           );
         })
       ) : (
-        <p>No bookings available.</p>
+        <p className="text-center">
+          You have not created any bookings yet...{' '}
+          <Link to="/">
+            <FocusButton buttonText="Explore Venues" />
+          </Link>
+        </p>
       )}
     </div>
   );
