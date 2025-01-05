@@ -5,6 +5,7 @@ import MyVenueList from '../../components/venue-manager';
 import CreateVenueModal from '../../modals/admin-venues/create-venue';
 import UpdateVenueModal from '../../modals/admin-venues/update-venue';
 import { loadFromStorage } from '../../stores/local-storage';
+import ToTopButton from '../../components/buttons/to-top-button';
 
 function AdminPage() {
   const userName = loadFromStorage('userProfile')?.name;
@@ -31,6 +32,9 @@ function AdminPage() {
         </div>
         <UpdateVenueModal venueId={selectedVenueId} />
         <MyVenueList onEditVenue={handleEditVenue} />
+        <div className="flex justify-center mt-36">
+          <ToTopButton />
+        </div>
       </div>
     </div>
   );
