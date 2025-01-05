@@ -83,7 +83,7 @@ function SpecificVenue() {
                 </div>
               ) : null}
             </div>
-            <div className="flex items-center mt-2">
+            <div className="flex items-center mt-4">
               {pinIcon}
               <p className="ms-2 italic text-sm">
                 {' '}
@@ -93,10 +93,10 @@ function SpecificVenue() {
                   'Secret Location'}
               </p>
             </div>
-            <p className="text-sm tracking-wide">
+            <p className="text-sm tracking-wide mt-2">
               {personIcon} {venue.maxGuests} guests
             </p>
-            <p className="mt-6">{venue.description}</p>
+            <p className="mt-6 max-w-xl">{venue.description}</p>
           </div>
         </div>
         <div className="flex flex-col ms-6 md:ms-0 w-64 mt-12">
@@ -131,7 +131,7 @@ function SpecificVenue() {
           {/* Bookings */}
           <BookingCalendar bookings={venue.bookings} onBookingSubmit={handleBookingSubmit} />
         </div>
-        <div className="flex items-end mt-6 ">
+        <div className="flex items-end mt-14 justify-end">
           <div className="flex flex-col">
             <p className="text-base">Venue managed by:</p>
             <p className="italic tracking-wide text-sm mt-4">{venue.owner.name}</p>
