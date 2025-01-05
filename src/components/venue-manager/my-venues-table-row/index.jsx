@@ -21,7 +21,7 @@ const MyVenuesTableRow = () => {
     }
   }, [profileName, fetchProfileVenues]);
 
-  if (!profileName) return <div>No profile selected.</div>;
+  if (!profileName) return <div>Unfortunately we cannot find a profile</div>;
   if (loading) return <Loader />;
   if (error) return <div>Error: {error}</div>;
 
@@ -61,7 +61,7 @@ const MyVenuesTableRow = () => {
           );
         })
       ) : (
-        <p>No venues available.</p>
+        <p>Create a venue and view it here...</p>
       )}
 
       {selectedVenueId && <UpdateVenueModal venueId={selectedVenueId} />}
