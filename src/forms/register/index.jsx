@@ -16,10 +16,7 @@ const schema = yup
       .required('Please enter your full name'),
     email: yup
       .string()
-      .matches(
-        /^[\w\-.]+@(stud\.noroff\.no|noroff\.no)$/,
-        'Please register with a stud.noroff.no or noroff.no email.'
-      )
+      .matches(/^[\w\-.]+@(stud\.noroff\.no)$/, 'Please register with a stud.noroff.no email.')
       .required('Please enter your email address.'),
     password: yup
       .string()
