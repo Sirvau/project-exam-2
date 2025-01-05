@@ -17,6 +17,7 @@ import {
 import DeviderLine from '../../devider-line';
 import BookingCalendar from '../../calender';
 import ApiManager from '../../../api-manager/api-manager';
+import Loader from '../../animations';
 
 function SpecificVenue() {
   const { id } = useParams();
@@ -28,7 +29,12 @@ function SpecificVenue() {
     }
   }, [venues.length, fetchVenues]);
 
-  if (loading) return <p>Loading venue details...</p>;
+  if (loading)
+    return (
+      <p>
+        <Loader />
+      </p>
+    );
   if (error) return <p>{error}</p>;
 
   const venue = venues.find((venue) => venue.id === id);

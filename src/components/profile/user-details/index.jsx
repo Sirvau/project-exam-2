@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ApiManager from '../../../api-manager/api-manager';
 import { loadFromStorage } from '../../../stores/local-storage';
+import Loader from '../../animations';
 
 const UserDetails = () => {
   const [userData, setUserData] = useState(null);
@@ -32,7 +33,7 @@ const UserDetails = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading user profile...</p>;
+    return <Loader />;
   }
 
   if (error) {

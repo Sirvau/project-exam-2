@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { loadFromStorage } from '../../../stores/local-storage';
 import TableRowTemplate from '../../table-row-template';
 import useBookingsStore from '../../../stores/booking-store';
+import Loader from '../../animations';
 
 const BookingList = () => {
   const { fetchProfileBookings, bookingsByProfile, loading, error } = useBookingsStore();
@@ -14,7 +15,7 @@ const BookingList = () => {
   }, [profileName, fetchProfileBookings]);
 
   if (!profileName) return <div>No profile selected.</div>;
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
   if (error) return <div>Error: {error}</div>;
 
   return (

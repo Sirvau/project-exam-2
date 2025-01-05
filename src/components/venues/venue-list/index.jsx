@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import useVenueStore from '../../../stores/venue-store';
 import SmallVenueCard from '../venue-card/small-card.jsx';
 import VenuePagination from '../../pagination';
+import Loader from '../../animations/index.jsx';
 
 const VenueList = () => {
   const { venues, loading, error, fetchVenues } = useVenueStore();
@@ -27,7 +28,7 @@ const VenueList = () => {
     setCurrentPage(page);
   };
 
-  if (loading) return <p>Loading venues...</p>;
+  if (loading) return <Loader />;
   if (error) return <p>{error}</p>;
 
   return (
