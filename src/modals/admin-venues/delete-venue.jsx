@@ -19,12 +19,14 @@ function DeleteVenueModal({ venueId, onCancel, onConfirm }) {
   }
 
   return (
-    <div className="">
+    <div>
       <SmallModal isOpen={!!venueId}>
-        <p className="tracking-wide">Are you sure you want to delete venue?</p>
-        <div className="flex items-center justify-center gap-2">
-          <FocusButton buttonText="Confirm" onClick={deleteVenue} />
-          <SubtileButton buttonText="Cancel" onClick={onCancel} />
+        <div>
+          <p className="tracking-wide">Are you sure you want to delete venue?</p>
+          <div className="flex items-center justify-center gap-2">
+            <FocusButton buttonText="Confirm" onClick={deleteVenue} />
+            <SubtileButton buttonText="Cancel" onClick={onCancel} />
+          </div>
         </div>
       </SmallModal>
     </div>
