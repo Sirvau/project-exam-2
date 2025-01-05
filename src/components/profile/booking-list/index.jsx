@@ -3,6 +3,8 @@ import { loadFromStorage } from '../../../stores/local-storage';
 import TableRowTemplate from '../../table-row-template';
 import useBookingsStore from '../../../stores/booking-store';
 import Loader from '../../animations';
+import FocusButton from '../../buttons/focus-button';
+import { Link } from 'react-router-dom';
 
 const BookingList = () => {
   const { fetchProfileBookings, bookingsByProfile, loading, error } = useBookingsStore();
@@ -42,7 +44,12 @@ const BookingList = () => {
           );
         })
       ) : (
-        <p>No bookings available.</p>
+        <p className="text-center">
+          You have not created any bookings yet...{' '}
+          <Link to="/">
+            <FocusButton buttonText="Explore Venues" />
+          </Link>
+        </p>
       )}
     </div>
   );
